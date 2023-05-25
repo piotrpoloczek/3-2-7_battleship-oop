@@ -1,8 +1,13 @@
 package com.codecool.view;
 
+import com.codecool.board.Board;
+import com.codecool.board.BoardFactory;
+import com.codecool.square.Square;
+
 import java.io.IOException;
 
 public class Display {
+    private int size = 10;
 
     public Display() {
 
@@ -41,16 +46,27 @@ public class Display {
         System.out.println("GAME MODES:");
         System.out.println("1. Easy");
         System.out.println("2. Normal");
-        System.out.println("3. Hard");
+//        System.out.println("3. Hard");
     }
 
     public void printHallOfFame() {
-
     }
 
-    public void printBoard() {
+    public void printBoard(Board board) {
 
+    // TODO System.out.println(play nr ...);
+
+        System.out.println("  A B C D E F G H I J");
+        for (int row = 0; row < size; row++) {
+            System.out.print(row + " ");
+            for (int col = 0; col < size; col++) {
+                System.out.print(board.getOcean()[row][col].getSquareStatus().getSymbol() + " ");
+            }
+            System.out.println();
+        }
     }
+
+
 
     public void printWinner() {
 

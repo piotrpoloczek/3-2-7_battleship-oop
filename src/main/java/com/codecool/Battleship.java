@@ -3,7 +3,7 @@ package com.codecool;
 import com.codecool.game.Game;
 import com.codecool.game.GameLevel;
 import com.codecool.game.GameMode;
-import com.codecool.util.ExitException;
+import com.codecool.exceptions.ExitException;
 import com.codecool.view.Display;
 import com.codecool.view.Input;
 
@@ -17,11 +17,13 @@ public class Battleship {
     private Display display;
     private Input input;
     private Game game;
+    private boolean isRunning;
 
 
     public Battleship() {
         display = new Display();
         input = new Input();
+        this.isRunning = true;
     }
 
 
