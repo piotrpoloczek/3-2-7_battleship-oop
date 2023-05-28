@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class CustomConfiguration {
+public class CustomConfiguration{
 
     private HashMap<String, List<String>> listOptions;
     private HashMap<ShipType, Integer> numberOfShips;
@@ -72,6 +72,10 @@ public class CustomConfiguration {
 
     public int getSize() {
         return size;
+    }
+
+    public String getExitButton() {
+        return this.exitButton;
     }
 
     public HashMap<ShipType, Integer> getNumberOfShips() {

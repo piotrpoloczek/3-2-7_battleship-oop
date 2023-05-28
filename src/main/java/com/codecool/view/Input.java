@@ -2,8 +2,7 @@ package com.codecool.view;
 
 import com.codecool.CustomConfiguration;
 import com.codecool.board.Coordinates;
-import com.codecool.exceptions.ExitException;
-import com.codecool.game.GameLevel;
+import com.codecool.player.PlayerLevel;
 import com.codecool.game.GameMode;
 import com.codecool.ship.Orientation;
 
@@ -29,7 +28,7 @@ public class Input {
         return scanner.next();
     }
 
-    public int getMainMenuOption() throws ExitException {
+    public int getMainMenuOption() {
         int option = getOption("Menu");
         return option;
     }
@@ -45,7 +44,7 @@ public class Input {
         return new Coordinates(10, 10);
     }
 
-    public GameMode getGameMode() throws ExitException {
+    public GameMode getGameMode() {
         int option = getOption("Mode");
         switch (option) {
             case 1:
@@ -59,41 +58,46 @@ public class Input {
         }
     }
 
-    public GameLevel getGameLevel() throws ExitException {
+    public PlayerLevel getGameLevel() {
         int option = getOption("Level");
         switch (option) {
             case 1:
-                return GameLevel.EASY;
+                return PlayerLevel.EASY;
             case 2:
-                return GameLevel.MEDIUM;
+                return PlayerLevel.MEDIUM;
             case 3:
-                return GameLevel.HARD;
+                return PlayerLevel.HARD;
             default:
                 return null;
         }
     }
 
-    private int getOption(String key) throws ExitException {
+    private int getOption(String key) {
         while(true) {
             List<String> options = configuration.getListOptions().get(key);
             display.printMenu(options);
-            //checkExit();
-            int option = scanner.nextInt();
-            if (option >= 1 && option <= options.size()) {
-                return option;
+
+            try {
+                int option = scanner.nextInt();
+                if (option >= 1 && option <= options.size()) {
+                    return option;
+                }
+            } catch (InputMismatchException e) {
+                checkExit();
             }
+
         }
     }
 
-    private String checkExit() throws ExitException {
-        try {
-            String input = scanner.next();
-            if (input == "q") {
-                throw new ExitException();
-            }
-            return input;
-        } catch (InputMismatchException e) {
+    private void checkExit() {
+        String input = scanner.next();
+        if (input.equals(configuration.getExitButton())) {
+            exitGame();
         }
-        return null;
+    }
+
+    public void exitGame() {
+        display.printExitMessage();
+        System.exit(0); // Exit with status code 0 (normal exit)
     }
 }
