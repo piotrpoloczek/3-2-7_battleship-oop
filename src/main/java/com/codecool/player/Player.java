@@ -1,44 +1,49 @@
 package com.codecool.player;
 
-import com.codecool.board.Board;
-import com.codecool.board.Coordinates;
-import com.codecool.ship.Ship;
-import com.codecool.square.SquareStatus;
 
-import java.util.ArrayList;
+import com.codecool.board.Board;
+import com.codecool.ship.Ship;
+import com.codecool.ship.ShipFactory;
+
 import java.util.List;
 
 public abstract class Player {
 
-    // przy takiej konfiguracji w której to player ma borda ze swoimi statkami oraz z swoimi strzałami
-    // jak możemy się odwoływać do borda przeciwnika żeby sprawdzić czy strzał był udany
-    // podejrzewam że musi to być zaimplementowane w logice game już.
-    private Board shootingBoard;
-    private Board checkingBoard;
-    private List<Ship> ships;
-    private String name;
+    private final String name;
+    private final List<Ship> ships;
+    private final Board playerBoard;
+    private final Board checkingBoard;
 
-    public Player() {
-        this.ships = new ArrayList<Ship>();
+    protected Player(String name, ShipFactory shipFactory) {
+        this.name = name;
+        this.checkingBoard = new Board();
+        this.playerBoard = new Board();
+        this.ships = shipFactory.create(playerBoard);
     }
 
     public boolean isAlive() {
-        return ships.size() == 0;
+        if (ships.size() == 0) {
+            return false;
+        }
+        return true;
     }
 
-    // ask for coordinates and send it
-    // player choose the coordinates and that's all
-    // because the game should validate it against the list of opponent ships coordinates.
-    public  Coordinates shoot() {
-        return new Coordinates(10, 10);
-    }
+    //poczatek implementacj strzelania
+//    public void shoot() {
+//        if (coordinateInBoardSize(targetCoordinates)) {
+//            Square targetSquare = board.getOcean()[targetCoordinates.getX()][targetCoordinates.getY()];
+//            SquareStatus targetStatus = targetSquare.getSquareStatus();
+//
+//            if (targetStatus == SquareStatus.SHIP) {
+//                targetSquare.setSquareStatus(SquareStatus.HIT);
+//                Display.getInstance().printMessage("It's a hit!");
+//            } else {
+//                targetSquare.setSquareStatus(SquareStatus.MISSED);
+//                Display.getInstance().printMessage("It's a miss.");
+//            }
+//        } else {
+//            Display.getInstance().printMessage("Invalid target coordinates.");
+//        }
+//    }
 
-    // informacja czy statek został zatopiony
-    public SquareStatus responseToShoot(Coordinates coordinates) {
-        return null;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

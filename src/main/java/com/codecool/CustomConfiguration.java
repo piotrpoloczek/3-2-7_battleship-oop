@@ -2,20 +2,31 @@ package com.codecool;
 
 import com.codecool.ship.ShipType;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class CustomConfiguration{
 
+    private static CustomConfiguration instance;
     private HashMap<String, List<String>> listOptions;
     private HashMap<ShipType, Integer> numberOfShips;
     private String exitButton;
     private int size;
 
+
+    public static CustomConfiguration getInstance() {
+        if (instance == null) {
+            instance = new CustomConfiguration();
+        }
+        return instance;
+    }
+
     public CustomConfiguration() {
         this.listOptions = initializeOptions();
         this.size = 10;
+//        this.numberOfShips = 5;
         this.numberOfShips = initializeNumberOfShips();
         this.exitButton = "q";
     }
@@ -26,6 +37,7 @@ public class CustomConfiguration{
         optionsMap.put("Mode", createGameModeMenu());
         optionsMap.put("Level", createGameLevelMenu());
         optionsMap.put("Orientation", createOrientationMenu());
+        optionsMap.put("ShipType", createShipTypeMenu());
         return optionsMap;
     }
 
@@ -56,7 +68,7 @@ public class CustomConfiguration{
     private List<String> createOrientationMenu() {
         ArrayList<String> menuList = new ArrayList<>();
         menuList.add("Horizontal");
-        menuList.add("Vartical");
+        menuList.add("Vertical");
         return menuList;
     }
 
@@ -68,6 +80,15 @@ public class CustomConfiguration{
         mapNumberOfShips.put(ShipType.DESTROYER, 1);
         mapNumberOfShips.put(ShipType.SUBMARINE, 1);
         return mapNumberOfShips;
+    }
+    private List<String> createShipTypeMenu() {
+        ArrayList<String> shipTypeMenu = new ArrayList<>();
+        shipTypeMenu.add("BATTLESHIP");
+        shipTypeMenu.add("CARRIER");
+        shipTypeMenu.add("CRUISER");
+        shipTypeMenu.add("DESTROYER");
+        shipTypeMenu.add("SUBMARINE");
+        return shipTypeMenu;
     }
 
     public int getSize() {

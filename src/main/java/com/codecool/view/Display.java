@@ -7,11 +7,18 @@ import java.util.List;
 
 public class Display {
 
-    private CustomConfiguration configuration;
+
+    private static Display instance;
+
+    public static Display getInstance() {
+        if (instance == null) {
+            instance = new Display();
+        }
+        return instance;
+    }
 
 
-    public Display(CustomConfiguration configuration) {
-        this.configuration = configuration;
+    public Display() {
     }
 
 
@@ -44,18 +51,36 @@ public class Display {
 
 
     public void printBoard(Board board) {
-        System.out.println("  A B C D E F G H I J");
-        for (int row = 0; row < configuration.getSize(); row++) {
-            System.out.print(row + " ");
-            for (int col = 0; col < configuration.getSize(); col++) {
+        int size = CustomConfiguration.getInstance().getSize();
+        char rowLabel = 'A';
+        System.out.println(" "+ printNumber(size));
+        for (int row = 0; row < size; row++) {
+            System.out.print((char) (rowLabel + row) + " ");;
+            for (int col = 0; col < size; col++) {
                 System.out.print(board.getOcean()[row][col].getSquareStatus().getSymbol() + " ");
+
             }
+            System.out.print((char) (rowLabel + row) + " ");
             System.out.println();
         }
+        System.out.println(" "+ printNumber(size));
+        System.out.println();
     }
 
-    public void printMessage(String message) {
+    private StringBuilder printNumber(int size){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= size; i++){
+            sb.append(i);
+            if (i < size){
+                sb.append(" ");
+            }
+        }
+        return sb;
+    }
+
+    public String printMessage(String message) {
         System.out.println(message);
+        return message;
     }
 
 

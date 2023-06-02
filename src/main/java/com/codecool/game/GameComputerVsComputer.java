@@ -7,7 +7,8 @@ import com.codecool.view.Input;
 
 public class GameComputerVsComputer extends Game{
 
-    public GameComputerVsComputer(Input input, Display display, CustomConfiguration configuration) {
-        super(input, display, configuration);
+    public GameComputerVsComputer(Player firstPlayer, Player secondPlayer) {
+        super(firstPlayer, secondPlayer);
     }
+
 }
